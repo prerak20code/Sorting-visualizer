@@ -2,7 +2,7 @@ import axios from 'axios';
 const GEMINI_API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 console.log('GEMINI_API_ENDPOINT:', GEMINI_API_ENDPOINT);
 // console.log('API_KEY:', process.env.REACT_APP_GEMINI_API_KEY);
-const API_KEY = 'AIzaSyAXkA8cPYxkNb10p5J9T2OFITmvmQpMWo8';
+const API_KEY = '';//put your own api key here you can get it from https://generativelanguage.google.com/console/api-keys
 
 export const getDryRunSummary = async (algorithm, array) => {
   try {
