@@ -1,0 +1,20 @@
+name: SSH Test
+run-name: ${{ github.actor }} is testing SSH from GitHub Actions
+
+on: [push]
+
+jobs:
+  ssh-only:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH and connect
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 162.243.118.132 >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no root@162.243.118.132 "echo '🎉 SSH connection successful!'"
