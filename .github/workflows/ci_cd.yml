@@ -17,7 +17,8 @@ jobs:
           echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 162.243.118.132 >> ~/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no root@162.243.118.132 "echo '🎉 SSH connection successful!'"
+          ssh -o StrictHostKeyChecking=no root@162.243.118.132 <<'EOF'
+          echo '🎉 SSH connection successful!'
           pwd
           cd /var/www/Sorting-visualizer
           git pull origin main
@@ -28,3 +29,4 @@ jobs:
           sudo nginx -t
           sudo systemctl reload nginx
           echo "Deployment completed successfully!"
+          EOF
