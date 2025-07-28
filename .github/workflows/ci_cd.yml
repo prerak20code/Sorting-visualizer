@@ -14,13 +14,14 @@ jobs:
       - name: Set up SSH and Deploy
         run: |
           mkdir -p ~/.ssh
-          
+          pwd
+          echo "Setting up SSH key..."
           echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
           ssh-keyscan 192.241.159.161 >> ~/.ssh/id_ed25519
           echo "SSH key added to known hosts."
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@192.241.159.161 << 'EOF'
+          ssh  -o StrictHostKeyChecking=no root@192.241.159.161 << 'EOF'
             echo '🎉 SSH connection successful!'
             cd /root/Sorting-visualizer
             git pull origin main
