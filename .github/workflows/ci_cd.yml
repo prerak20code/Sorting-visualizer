@@ -19,7 +19,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
           ssh-keyscan 192.241.159.161 >> ~/.ssh/known_hosts
-
+          echo "SSH key added to known hosts."
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@192.241.159.161 << 'EOF'
             echo '🎉 SSH connection successful!'
             cd /root/Sorting-visualizer
