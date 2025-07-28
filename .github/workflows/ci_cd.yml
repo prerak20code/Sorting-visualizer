@@ -16,8 +16,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 162.243.118.132 >> ~/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no root@162.243.118.132 <<'EOF'
+          ssh-keyscan 192.241.159.161 >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no root@192.241.159.161 <<'EOF'
           echo '🎉 SSH connection successful!'
           pwd
           cd /var/www/Sorting-visualizer
