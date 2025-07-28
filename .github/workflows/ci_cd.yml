@@ -15,9 +15,9 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo 'hello' 
-          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 192.241.159.161 >> ~/.ssh/known_hosts
+          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}"
+          chmod 600 ~/.ssh/id_ed25519.pub
+          ssh-keyscan 192.241.159.161 >> ~/.ssh/authorized_keys
           ssh -o StrictHostKeyChecking=no root@192.241.159.161 <<'EOF'
           echo '🎉 SSH connection successful!'
           pwd
