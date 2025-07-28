@@ -11,23 +11,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up SSH and connect
+      - name: Set up SSH and Deploy
         run: |
           mkdir -p ~/.ssh
-          echo 'hello' 
-          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}"
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan 192.241.159.161 >> ~/.ssh/authorized_keys
-          ssh -o StrictHostKeyChecking=no root@192.241.159.161 <<'EOF'
-          echo '🎉 SSH connection successful!'
-          pwd
-          cd /var/www/Sorting-visualizer
-          git pull origin main
-          npm install
-          npm run build
-          sudo rm -rf /var/www/sortingvisualizer.work.gd/*
-          sudo cp -r /root/Sorting-visualizer/dist/*  /var/www/sortingvisualizer.work.gd
-          sudo nginx -t
-          sudo systemctl reload nginx
-          echo "Deployment completed successfully!"
+          
+          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          ssh-keyscan 192.241.159.161 >> ~/.ssh/known_hosts
+
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@192.241.159.161 << 'EOF'
+            echo '🎉 SSH connection successful!'
+            cd /root/Sorting-visualizer
+            git pull origin main
+            npm install
+            npm run build
+
+            sudo rm -rf /var/www/sortingvisualizer.work.gd/*
+            sudo cp -r dist/* /var/www/sortingvisualizer.work.gd/
+            sudo nginx -t
+            sudo systemctl reload nginx
+            echo "✅ Deployment completed successfully!"
           EOF
